@@ -54,7 +54,7 @@ class MysqlConfig extends Hush_Db_Config
 	 * 获取单例
 	 * @return Hush_Db_Config
 	 */
-	public function getInstance () 
+	public static function getInstance () 
 	{
 		static $dbConfig;
 		if ($dbConfig == null) {

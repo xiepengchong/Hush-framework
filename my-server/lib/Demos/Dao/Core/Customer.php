@@ -64,7 +64,7 @@ class Core_Customer extends Demos_Dao_Core
 		$customer['faceurl'] = Demos_Util_Image::getFaceUrl($customer['face']);
 		return $customer;
 	}
-	
+		
 	/**
 	 * Add blogcount by one
 	 * @param int $id
