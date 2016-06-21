@@ -98,4 +98,24 @@ class ImageServer extends Demos_App_Server
 			'Image.list' => $faceList
 		));
 	}
+	
+		/**
+	 * ---------------------------------------------------------------------------------------------
+	 * > 接口说明：头像列表接口
+	 * <code>
+	 * URL地址：/image/startImage
+	 * 提交方式：GET
+	 * </code>
+	 * ---------------------------------------------------------------------------------------------
+	 * @title 头像列表接口
+	 * @action /image/startImage
+	 * @method get
+	 */
+	public function startImageAction ()
+	{
+		$startImage = Demos_Util_Image::getStartImage(1);
+		$this->render('10000', 'Get start image ok', array(
+			'start_image' => $startImage
+		));
+	}
 }

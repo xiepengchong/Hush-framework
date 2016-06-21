@@ -36,4 +36,23 @@ class Demos_Util_Image
 			'type' => 'png',
 		);
 	}
+	
+		/**
+	 * 获取头像图片的对象
+	 * @param int $id
+	 */
+	public static function getStartImage ($id) 
+	{
+		return array(
+			'id' => $id,
+			'url' => self::getStartUrl(),
+			'type' => 'png',
+			'stay_time' => '3000',
+		);
+	}
+	
+	private static function getStartUrl(){
+		$facePath = __HOST_WEBSITE . '/image/start';
+		return $facePath . '/start_image.png';
+	}
 }
