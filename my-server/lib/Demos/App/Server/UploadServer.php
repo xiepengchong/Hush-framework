@@ -41,6 +41,8 @@ class UploadServer extends Demos_App_Server
 	 * @action /upload/uploadUrl
 	 * @params url STRING
 	 * @params userId STRING
+	 * @params type INT
+	 * @params title STRING
 	 * @method post
 	 */
 	public function uploadUrlAction ()
@@ -48,15 +50,66 @@ class UploadServer extends Demos_App_Server
 		$this->doAuth();
 		
 		$userId = $this->param('userId');
-		$url = intval($this->param('url'));
-	    if($userId && $url){
+		$url = $this->param('url');
+		$type = $this->param('type');
+		$title = $this->param('title');
+		if($userId && $url){
 			$fileDao = $this->dao->load('Core_File');
 			$fileDao->create(array(
 			'userId' => $userId,
-			'url' => $url
+			'url' => $url,
+			'type' => $type,
+			'title' => $title
 			));
-			$this->render('10000','upload file ok')
+			$this->render('10000','upload file ok');
 		}	
-		$this->render('10000', 'upload file failed');
+		$this->render('14006', 'upload file failed');
+	}
+	
+		
+	/**
+	 * ---------------------------------------------------------------------------------------------
+	 * > 接口说明 获取文章列表
+	 * <code>
+	 * URL地址：/upload/urlList
+	 * 提交方式：get
+	 * 参数#1：userId，类型：INT，必须：YES，示例：1
+	 * </code>
+	 * ---------------------------------------------------------------------------------------------
+	 * @title 上传文章网址
+	 * @action /upload/urlList
+	 * @params userId INT
+	 * @method get
+	 */
+	public function urlListAction ()
+	{
+		$this->doAuth();
+
+		$userId = intval($this->param('userId'));
+		$urlList = array();
+		$fileDao = $this->dao->load('Core_File');
+		$urlList = $fileDao->getListByCustomer($userId);
+		if($urlList){
+			$this->render('10000','get url list ok',array('Url.list' => $urlList));
+		}
+		$this->render('14008','get url list failed');
+	}
+	
+	/**
+	*@title 根据文章类型获取文章网址列表
+	* @action /upload/urlListByType
+	* @params type INT
+	* @method get
+	**/
+	public function urlListByTypeAction ()
+	{
+		$type = intval($this->param('type'));
+		$urlList = array();
+		$fileDao = $this->dao->load('Core_File');
+		$urlList = $fileDao->getListByType($type);
+		if($urlList){
+			$this->render('10000','get url list ok',array('Url.list' => $urlList));
+		}
+		$this->render('14008','get url list failed');
 	}
 }

@@ -36,4 +36,40 @@ class Core_File extends Demos_Dao_Core
 		
 		$this->_bindTable($this->t1, $this->k1);
 	}
+
+	public function getListByCustomer($customer_id){
+        $list = array();
+		$sql = $this->select()
+			->from($this->t1,'*')
+			->where("{$this->t1}.userId = ?",$customer_id);
+		$res = $this->dbr()->fetchAll($sql);
+		if($res){
+			foreach($res as $row){
+			 $url = array(
+			 	'title' => $row['title'],
+			 	'url' => $row['url']
+			 );
+				array_push($list,$url);
+			}
+		}
+		return $list;
+	}
+
+	public function getListByType($type){
+		$list = array();
+		$sql = $this->select()
+				->from($this->t1,'*')
+				->where("{$this->t1}.type = ?",$type);
+		$res = $this->dbr()->fetchAll($sql);
+		if($res){
+			foreach($res as $row){
+				$url = array(
+					'title' => $row['title'],
+					'url' => $row['url']
+				);
+				array_push($list,$url);
+			}
+		}
+		return $list;
+	}
 }
