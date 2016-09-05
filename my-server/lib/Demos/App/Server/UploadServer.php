@@ -112,4 +112,51 @@ class UploadServer extends Demos_App_Server
 		}
 		$this->render('14008','get url list failed');
 	}
+
+	/**
+	* @title 根据文章类型获取文章网址列表
+	* @action /upload/urlListByTypeAndCondition
+	* @params type INT
+	* @params startId INT
+	* @params length INT
+	* @method get
+	**/
+	public function urlListByTypeAndConditionAction ()
+	{
+		$type = intval($this->param('type'));
+		$startId = intval($this->param('startId'));
+		$lenght = intval($this->param('length'));
+		$urlList = array();
+		$fileDao = $this->dao->load('Core_File');
+		$urlList = $fileDao->getListByTypeAndCondition($type,$startId,$lenght);
+		if($urlList){
+			$this->render('10000','get url list ok',array('Url.list' => $urlList));
+		}
+		$this ->render('14008','get url list failed');
+	}
+
+		function file_get_contents($filename)
+		{
+    		$handle = fopen($filename, "rb");
+	    	$contents = fread($handle, filesize($filename));
+		    fclose($handle);
+			return $contents;
+		}
+	/**
+	* @title 测试联网
+	* @action /upload/test
+	* @params input STRING
+	* @method get
+	**/
+	public function testAction ()
+	{
+		$input = $this->param('type');
+		$url = 'http://www.baidu.com';
+		$html = file_get_contents($url);
+		if($html){
+			$this->render('10000','get url is ok',$html);
+		}
+		$this->render('14009','get url failed');
+	}
+
 }

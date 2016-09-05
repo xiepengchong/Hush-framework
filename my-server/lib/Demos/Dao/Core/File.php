@@ -46,6 +46,8 @@ class Core_File extends Demos_Dao_Core
 		if($res){
 			foreach($res as $row){
 			 $url = array(
+			 	'id' => $row['id'],
+			 	'icon' => $row['icon'],
 			 	'title' => $row['title'],
 			 	'url' => $row['url']
 			 );
@@ -64,6 +66,8 @@ class Core_File extends Demos_Dao_Core
 		if($res){
 			foreach($res as $row){
 				$url = array(
+					'id' => $row['id'],					
+					'icon' => $row['icon'],
 					'title' => $row['title'],
 					'url' => $row['url']
 				);
@@ -72,4 +76,30 @@ class Core_File extends Demos_Dao_Core
 		}
 		return $list;
 	}
+
+	
+	public function getListByTypeAndCondition($type,$startId,$length){
+
+		$list = array();
+		$sql = $this->select()
+				->from($this->t1,'*')
+				->order("{$this->t1}.id asc")
+				->where("{$this->t1}.type = ?",$type)
+				->where("id > ?",$startId)
+				->limit($length);
+		$res = $this->dbr()->fetchAll($sql);
+		if($res){
+			foreach($res as $row){
+				$url = array(
+					'id' => $row[id],
+					'icon' => $row['icon'],
+					'title' => $row['title'],
+					'url' => $row['url']
+				);
+				array_push($list,$url);
+			}
+		}
+		return $list;
+	}
+
 }

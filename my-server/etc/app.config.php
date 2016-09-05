@@ -33,8 +33,8 @@ define('__APP_VERSION', '1.0');
 /**
  * URL relative constants
  */
-define('__HOST_SERVER', 'http://192.168.1.5:888');
-define('__HOST_WEBSITE', 'http://192.168.1.5:889');
+define('__HOST_SERVER', 'http://192.168.1.7:888');
+define('__HOST_WEBSITE', 'http://192.168.1.7:889');
 
 /**
  * MVC url mapping ini file
